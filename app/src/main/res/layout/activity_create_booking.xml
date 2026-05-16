@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateBookingActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_service_booking"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="25dp" />
+
+    <EditText
+        android:id="@+id/txtServiceType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/service_type"
+        android:importantForAutofill="no"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/txtBookingDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/booking_date"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/txtServiceStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/service_status"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/txtAssignedMechanic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:autofillHints=""
+        android:hint="@string/assigned_mechanic"
+        android:minHeight="48dp"
+        tools:ignore="TextFields" />
+
+    <Button
+        android:id="@+id/btnAddBooking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_booking"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:layout_marginTop="10dp" />
+</LinearLayout>

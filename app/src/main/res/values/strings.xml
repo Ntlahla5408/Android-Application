@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">IMOB301Asssignment</string>
+    <string name="create_booking">Create Booking</string>
+    <string name="view_bookings">View Bookings</string>
+    <string name="update_service_status">Update Service Status</string>
+    <string name="create_service_booking">Create Service Booking</string>
+    <string name="service_type">Service Type</string>
+    <string name="booking_date">Booking Date</string>
+    <string name="service_status">Service Status</string>
+    <string name="assigned_mechanic">Assigned Mechanic</string>
+    <string name="add_booking">Add Booking</string>
+    <string name="back">Back</string>
+    <string name="update_delete_booking">Update/Delete Booking</string>
+    <string name="booking_id">Booking ID</string>
+    <string name="delete_booking">Delete Booking</string>
+    <string name="update_booking">Update Booking</string>
+</resources>

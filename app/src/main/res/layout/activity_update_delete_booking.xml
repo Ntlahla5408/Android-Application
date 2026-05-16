@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateDeleteBookingActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_delete_booking"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="25dp" />
+
+    <EditText
+        android:id="@+id/txtBookingID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/booking_id"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/txtServiceType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/service_type"
+        android:minHeight="48dp"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/txtBookingDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/booking_date"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/txtServiceStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/service_status"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/txtAssignedMechanic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/assigned_mechanic"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update_booking"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_booking"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginTop="10dp"/>
+
+
+</LinearLayout>
