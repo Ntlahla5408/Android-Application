@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IMOB301Asssignment</string>
+    <string name="app_name">Vehicle Service Booking</string>
     <string name="create_booking">Create Booking</string>
     <string name="view_bookings">View Bookings</string>
     <string name="update_service_status">Update Service Status</string>
