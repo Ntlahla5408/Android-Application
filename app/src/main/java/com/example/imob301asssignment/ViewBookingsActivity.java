@@ -1,18 +1,15 @@
 package com.example.imob301asssignment;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
-import java.util.ArrayList;
-import android.database.sqlite.SQLiteDatabase;
-
-import android.content.Intent;
-import android.view.View;
-import android.widget.AdapterView;
-
-import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,60 +17,44 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
 
 public class ViewBookingsActivity extends AppCompatActivity {
 
-    ListView listViewBookings;
-    ArrayList<String> bookingList;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> bookingIDs = new ArrayList<>();
-    Button btnBack;
+    private ListView listViewBookings;
+    private final ArrayList<String> bookingList = new ArrayList<>();
+    private final ArrayList<String> bookingIDs = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_view_bookings);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (view, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
         listViewBookings = findViewById(R.id.listViewBookings);
-        btnBack = findViewById(R.id.btnBack);
-
-        bookingList = new ArrayList<>();
-        bookingIDs = new ArrayList<>();
+        Button btnBack = findViewById(R.id.btnBack);
 
         adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 bookingList
         );
-
-
         listViewBookings.setAdapter(adapter);
-        listViewBookings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String selectedBookingID = bookingIDs.get(position);
-
-                Intent intent = new Intent(ViewBookingsActivity.this,
-                        UpdateDeleteBookingActivity.class);
-
-                intent.putExtra("bookingID", selectedBookingID);
-
-                startActivity(intent);
-            }
+        listViewBookings.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedBookingID = bookingIDs.get(position);
+            Intent intent = new Intent(ViewBookingsActivity.this, UpdateDeleteBookingActivity.class);
+            intent.putExtra("bookingID", selectedBookingID);
+            startActivity(intent);
         });
 
-        btnBack.setOnClickListener(v -> {
-            finish();
-        });
-
-        viewData();
+        btnBack.setOnClickListener(view -> finish());
     }
 
     @Override
@@ -82,46 +63,38 @@ public class ViewBookingsActivity extends AppCompatActivity {
         viewData();
     }
 
-    public void viewData() {
+    private void viewData() {
+        bookingList.clear();
+        bookingIDs.clear();
 
         try {
-
-            SQLiteDatabase db = openOrCreateDatabase("VehicleServiceDB", MODE_PRIVATE, null);
-
-            Cursor cursor = db.rawQuery("SELECT * FROM Bookings", null);
-
-            int bookingID = cursor.getColumnIndex("bookingID");
-            int serviceType = cursor.getColumnIndex("serviceType");
-            int bookingDate = cursor.getColumnIndex("bookingDate");
-            int serviceStatus = cursor.getColumnIndex("serviceStatus");
-            int assignedMechanic = cursor.getColumnIndex("assignedMechanic");
-
-            bookingList.clear();
-            bookingIDs.clear();
-
-            if (cursor.moveToFirst()) {
-
-                do {
-
-                    String booking =
-                            "ID: " + cursor.getString(bookingID) + "\n" +
-                                    "Service: " + cursor.getString(serviceType) + "\n" +
-                                    "Date: " + cursor.getString(bookingDate) + "\n" +
-                                    "Status: " + cursor.getString(serviceStatus) + "\n" +
-                                    "Mechanic: " + cursor.getString(assignedMechanic);
+            SQLiteDatabase database = BookingDatabase.getWritableDatabase(this);
+            try (Cursor cursor = database.rawQuery(
+                    "SELECT bookingID, serviceType, bookingDate, serviceStatus, assignedMechanic " +
+                            "FROM Bookings ORDER BY bookingID DESC",
+                    null
+            )) {
+                while (cursor.moveToNext()) {
+                    String bookingID = cursor.getString(cursor.getColumnIndexOrThrow("bookingID"));
+                    String booking = "ID: " + bookingID + "\n" +
+                            "Service: " + cursor.getString(cursor.getColumnIndexOrThrow("serviceType")) + "\n" +
+                            "Date: " + cursor.getString(cursor.getColumnIndexOrThrow("bookingDate")) + "\n" +
+                            "Status: " + cursor.getString(cursor.getColumnIndexOrThrow("serviceStatus")) + "\n" +
+                            "Mechanic: " + cursor.getString(cursor.getColumnIndexOrThrow("assignedMechanic"));
 
                     bookingList.add(booking);
-                    bookingIDs.add(cursor.getString(bookingID));
-
-                } while (cursor.moveToNext());
+                    bookingIDs.add(bookingID);
+                }
             }
 
             adapter.notifyDataSetChanged();
 
-            cursor.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            if (bookingList.isEmpty()) {
+                Toast.makeText(this, "No bookings have been created yet", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception exception) {
+            adapter.notifyDataSetChanged();
+            Toast.makeText(this, "Could not load bookings", Toast.LENGTH_SHORT).show();
         }
     }
 }
